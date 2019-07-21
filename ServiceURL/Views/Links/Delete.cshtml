@@ -1,0 +1,39 @@
+﻿@model ServiceURL.Models.Link
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Style.css" />
+</head>
+<body>
+    <div id="header">
+        Удаление ссылки
+    </div>
+    <div id="main">
+        <div id="nameField">
+            @Html.DisplayNameFor(model => model.Id)<br />
+            @Html.DisplayNameFor(model => model.LongUrl)<br />
+            @Html.DisplayNameFor(model => model.ShortUrl)<br />
+            @Html.DisplayNameFor(model => model.DateCreate)<br />
+            @Html.DisplayNameFor(model => model.NumberOfTransitions)
+        </div>
+        <div id="fieldForDelete">
+            @using (Html.BeginForm("Delete", "Links", FormMethod.Post))
+            {
+                <label name="Id">@Model.Id</label><br />
+                <label name="LongUrl">@Model.LongUrl</label><br />
+                <label name="ShortUrl">@Model.ShortUrl</label><br />
+                <label name="DateCreate">@Model.DateCreate</label><br />
+                <label name="NumberOfTransitions">@Model.NumberOfTransitions</label><br />
+                <a href="/"><input type="button" id="button" value="Назад" /></a>
+                <input type="submit" id="button" value="Удалить" />
+
+            }
+        </div>
+    </div>
+</body>
+</html>
+

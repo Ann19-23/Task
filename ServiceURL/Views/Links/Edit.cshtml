@@ -1,0 +1,39 @@
+﻿@model ServiceURL.Models.Link
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Style.css" />
+</head>
+<body>
+    <div id="header">
+        Редактирование ссылки
+    </div>
+    <div id="main">
+        <div id="nameField">
+            @Html.DisplayNameFor(model => model.LongUrl)<br />           
+            @Html.DisplayNameFor(model => model.ShortUrl)<br />
+            @Html.DisplayNameFor(model => model.DateCreate)<br />
+            @Html.DisplayNameFor(model => model.NumberOfTransitions)
+        </div>
+        <div id="fieldForEdit">
+            @using (Html.BeginForm("Edit", "Links", FormMethod.Post))
+            {
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <input type="text" id="input" name="LongUrl" value="@Model.LongUrl"><br />
+                <input type="text" id="input" name="ShortUrl" value="@Model.ShortUrl"><br />
+                <input type="datetime" id="input" name="DateCreate" value="@Model.DateCreate"><br />
+                <input type="text" id="input" name="NumberOfTransitions" value="@Model.NumberOfTransitions">
+                <input type="submit" id="button" value="Сохранить" />
+                <a href="/"><input type="button" id="button" value="Назад" /></a>
+            }
+        </div>
+    </div>
+</body>
+</html>
+  

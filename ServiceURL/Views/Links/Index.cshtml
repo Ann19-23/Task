@@ -1,0 +1,113 @@
+﻿@model IEnumerable<ServiceURL.Models.Link>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" type="text/css" href="~/css/Style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function GetDescription(link) {
+            $.ajax({
+                type: "POST",
+                data: {
+                    linkUrl: link
+                },
+                url: "Links/Create",
+                success: function (data) {
+                    var arr = data;
+                    $("#results").text(arr[0]);
+   
+                    if (arr[1] == 'true') {
+                        GetIndex();
+                    }
+                }
+            });
+        }
+        function GetIndex() {
+            $.ajax({
+                url: "/Links/GetLastValue",
+                type: "GET",
+                data: "",
+                success: function (data) {
+                    $('#tableUrls tr:last').after(data);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="header">
+        Сервис сокращения ссылок
+    </div>
+    <div id="main">
+        <div id="info">
+            <div>
+                <form>
+                    <input id="input" name="url">
+                   
+                    <input type="button" id="button" value="Cократить" onclick="GetDescription(this.form.url.value)" />
+                </form>
+            </div>
+            <div id="shortlink">Сокращенная ссылка:</div>
+            <div id="results"></div>
+        </div>
+        <div id="myTable">
+            <table id="tableUrls">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LongUrl)
+                        
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShortUrl)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateCreate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumberOfTransitions)
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.LongUrl)
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.ShortUrl)
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.DateCreate)
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.NumberOfTransitions)
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) <br>
+                                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                            </div>
+                        </td>
+            
+                    </tr>
+                }
+
+                </table>
+            </div>
+    </div>
+</body>
+</html>
